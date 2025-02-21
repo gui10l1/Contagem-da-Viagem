@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contagem Regressiva</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h1, p {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="timer">Carregando...</h1>
+    <p>Horário de chegada: 18:40</p>
+    <script>
+        function iniciarContagem() {
+            const agora = new Date();
+            const ano = agora.getFullYear();
+            const mes = agora.getMonth();
+            const dia = agora.getDate();
+            const inicio = new Date(ano, mes, dia, 9, 43, 0);
+            const fim = new Date(ano, mes, dia, 18, 40, 0);
+            
+            if (agora < inicio) {
+                document.getElementById("timer").innerText = "A contagem ainda não começou.";
+                return;
+            }
+            
+            function atualizarContagem() {
+                const agora = new Date();
+                const diferenca = fim - agora;
+
+                if (diferenca <= 0) {
+                    document.getElementById("timer").innerText = "O Gui já chegou 🥳💖";
+                    clearInterval(intervalo);
+                    return;
+                }
+
+                const horas = Math.floor(diferenca / (1000 * 60 * 60));
+                const minutos = Math.floor((diferenca % (1000 * 60 * 60)) / (1000 * 60));
+                const segundos = Math.floor((diferenca % (1000 * 60)) / 1000);
+                
+                document.getElementById("timer").innerText = `Restam apenas: ${horas}h ${minutos}m ${segundos}s`;
+            }
+            
+            atualizarContagem();
+            const intervalo = setInterval(atualizarContagem, 1000);
+        }
+        
+        iniciarContagem();
+    </script>
+</body>
+</html>
